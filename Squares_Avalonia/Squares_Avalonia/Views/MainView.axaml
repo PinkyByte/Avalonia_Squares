@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Squares_Avalonia.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Squares_Avalonia.Views.MainView"
+             x:DataType="vm:SquaresViewModel">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<WrapPanel Grid.Row="0" Orientation="Horizontal">
+			<Button Command="{Binding NewGameCommand}">Új játék</Button>
+			<Button Command="{Binding LoadGameCommand}">Játék betöltése</Button>
+			<Button Command="{Binding SaveGameCommand}">Játék mentése</Button>
+			<ComboBox SelectedIndex="1">
+				<ComboBoxItem IsSelected="{Binding IsGameSmall}">3 x 3</ComboBoxItem>
+				<ComboBoxItem IsSelected="{Binding IsGameMedium}">5 x 5</ComboBoxItem>
+				<ComboBoxItem IsSelected="{Binding IsGameLarge}">9 x 9</ComboBoxItem>
+			</ComboBox>
+		</WrapPanel>
+		<ItemsControl Grid.Row="1" ItemsSource="{Binding VerFields}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Button Command="{Binding DrawCommand}" Width="{Binding Width}" Height="{Binding Height}" CommandParameter="{Binding XYV}" IsEnabled="{Binding IsEnabled}" Background="White"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.Styles>
+				<Style Selector="ContentPresenter" x:DataType="Button">
+					<Setter Property="Canvas.Left" Value="{Binding Left}"/>
+					<Setter Property="Canvas.Top" Value="{Binding Top}"/>
+				</Style>
+			</ItemsControl.Styles>
+		</ItemsControl>
+		<ItemsControl Grid.Row="1" ItemsSource="{Binding HorFields}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Button Command="{Binding DrawCommand}" Width="{Binding Width}" Height="{Binding Height}" CommandParameter="{Binding XYV}" IsEnabled="{Binding IsEnabled}" Background="White"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+			<ItemsControl.Styles>
+				<Style Selector="ContentPresenter" x:DataType="Button">
+					<Setter Property="Canvas.Left" Value="{Binding Left}"/>
+					<Setter Property="Canvas.Top" Value="{Binding Top}"/>
+				</Style>
+			</ItemsControl.Styles>
+		</ItemsControl>
+		<Border Grid.Row="2">
+			<StackPanel  Orientation="Horizontal">
+				<TextBlock Text="Kék játékos pontszáma: "/>
+				<TextBlock Text="{Binding PlayerOneScore}"/>
+				<TextBlock Text=" | "/>
+				<TextBlock Text="Narancs játékos pontszáma: "/>
+				<TextBlock Text="{Binding PlayerTwoScore}"/>
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>
